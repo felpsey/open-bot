@@ -5,29 +5,27 @@
  * @felpsey
  */
 
-require('dotenv').config();
+require('dotenv').config({ path: './test.env' });
 
 const { Client, Intents } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const discord = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const test = require('./app/test');
 const service = require('./app/service');
 
 (async function() {
-    let test_connection = await test.connection(discord);
-    let test_commands = await test.commands(discord);
+    let test_commands = await test.commands();
+    let test_connection = await test.connection(client);
 
     return {
-        connection: test_connection,
         commands: test_commands,
+        connection: test_connection,
     };
-})().then(results => {
-    if (results.connection) { console.log('\x1b[32m%s\x1b[0m', 'Connected to Discord Gateway successfully'); }
-    if (results.commands) { console.log('\x1b[32m%s\x1b[0m', 'Slash commands registered'); }
+})().then(test => {
+    if (test.commands) { console.log('\x1b[32m%s\x1b[0m', 'Slash Commands registered successfully'); }
+    if (test.connection) { console.log('\x1b[32m%s\x1b[0m', 'Connected to Discord Gateway successfully'); }
 
-    service.connect(discord);
+    service.start(client);
 }).catch(error => {
     console.log(error);
 
