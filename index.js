@@ -5,7 +5,7 @@
  * @felpsey
  */
 
-require('dotenv').config({ path: './test.env' });
+require('dotenv').config({ path: './env.test' });
 
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
