@@ -1,3 +1,7 @@
+# Environment variables
+production.env
+test.env
+
 # Logs
 logs
 *.log
