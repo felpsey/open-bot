@@ -9,7 +9,7 @@ module.exports = {
         client.on('interactionCreate', async interaction => {
             if (!interaction.isCommand()) return;
 
-            if (interaction.commandName === 'help') {
+            if (interaction.commandName === 'about') {
                 let embed = embed_template.general(
                     '#0099ff',
                     'https://open.ac.uk',
