@@ -1,7 +1,9 @@
-const embed_template = require('./templates/embed');
-
 module.exports = {
-    start: function(client) {
+    status: function(client, message) {
+        client.user.setActivity('commands.mp3', { type: 'LISTENING' })
+    },
+
+    start: function(client, embed_template) {
         console.log('\x1b[32m%s\x1b[0m', 'Listening for commands...');
 
         client.on('interactionCreate', async interaction => {
@@ -9,10 +11,12 @@ module.exports = {
 
             if (interaction.commandName === 'help') {
                 let embed = embed_template.general(
-                    'Welcome to the OU Students Discord', 
+                    '#0099ff',
+                    'https://open.ac.uk',
+                    'Welcome to the OU Student Space', 
                     `
-                    This is a common area consisting of students of various courses and stages of their OU experience.
-                    Moderation is in accordance with the Universities social media use policies which can be found on the open.ac.uk website.
+                    This is a common area consisting of students of various courses and stages.\n
+                    Moderation is in accordance with the Universities social media use policy.
                     `,
                     'This server is not officially affiliated with the Open University',
                 );
@@ -20,5 +24,5 @@ module.exports = {
                 await interaction.reply({ embeds: [embed] });
             }
         });
-    }
+    },
 }

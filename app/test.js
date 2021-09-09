@@ -5,8 +5,8 @@ module.exports = {
     commands: function(rest) {
         return new Promise(function(resolve, reject) {
 			const commands = [{
-				name: 'help',
-				description: 'Basic usage information for the Open Bot',
+				name: 'about',
+				description: 'A brief description of the community',
 			}]; 
 
 			const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
