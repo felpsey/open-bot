@@ -1,20 +1,20 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const token = process.env.DISCORD_TOKEN;
+const client_id = process.env.CLIENT_ID;
+const guild_id = process.env.GUILD_ID;
 
 module.exports = {
     commands: function(rest) {
         return new Promise(function(resolve, reject) {
-			const commands = [{
-				name: 'about',
-				description: 'A brief description of the community',
-			}]; 
+			const commands = require('./commands.js'); 
 
-			const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
+			const rest = new REST({ version: '9' }).setToken(token);
 
 			(async function() {
 				try {
 					await rest.put(
-						Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+						Routes.applicationGuildCommands(client_id, guild_id),
 						{ body: commands },
 					);
 
@@ -37,7 +37,7 @@ module.exports = {
 			});
 
 			try {
-				client.login(process.env.DISCORD_TOKEN);
+				client.login(token);
 			} catch (error) {
 				reject({
 					message: error,

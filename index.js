@@ -21,10 +21,10 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const test = require('./app/test');
 const service = require('./app/service');
 const crawler = require('./app/crawler');
-const embed_template = require('./app/templates/embed');
+const embed = require('./app/templates/embed');
 
 /**
-* @test gateway connection, slash commands
+* @test  gateway connection, slash commands
 * @start interface service
 */
 
@@ -41,16 +41,16 @@ const embed_template = require('./app/templates/embed');
     if (test.connection) { console.log('\x1b[32m%s\x1b[0m', 'Connected to Discord Gateway successfully'); }
 
     service.status(client, '/help for command usage');
-    service.start(client, embed_template);
+    service.start(client, embed);
 }).catch(error => {
     console.log(error);
 });
 
 /**
-* @cron tasks set to run once per hour.
+* @cron tasks set to run once per two days.
 */
 
-cron.schedule('0 0 */4 * *', function() {
+cron.schedule('0 0 */2 * *', function() {
     (async function() {   
         let get_ou_status = await crawler.scrape(axios, 'status.open.ac.uk');
 
