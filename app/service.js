@@ -13,7 +13,9 @@ module.exports = {
              * @command     about
              * @description returns a message in the channel that the command was called in
              */
+
             if (interaction.commandName === 'about') {
+                if (interaction.member.roles.cache.some(role => role.name === 'test role')) {
                 let about_embed = embed.general(
                     '#0099ff',
                     'https://discord.gg/Kq3ukQJsdc',
@@ -24,6 +26,7 @@ module.exports = {
 
                 await interaction.reply({ embeds: [about_embed] });
             }
+        }
         });
     },
 }
