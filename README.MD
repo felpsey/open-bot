@@ -28,6 +28,7 @@ A server-side interface for the Open Bot, a OU Student Space Discord bot service
 - nodecron 3.0.0
 
 Visit the [OU Student Space server](https://discord.gg/Kq3ukQJsdc)
+
 For rights or University policy concerns, email me at [ethan.phelps@ou.ac.uk](mailto:ethan.phelps@ou.ac.uk)
 
 <img src="https://cdn.discordapp.com/icons/885092857256484875/cae4b43ba7ebc76b51968bf1f5cfa636.webp?size=128" width="100" height="100">
