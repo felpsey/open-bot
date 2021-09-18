@@ -29,4 +29,4 @@ A server-side interface for the Open Bot, a OU Student Space Discord bot service
 
 [OU Student Space server](https://discord.gg/Kq3ukQJsdc)
 
-![OU Student Space logo](./assets/static/ou-students-logo.jpg)
+![OU Student Space logo](./assets/static/ou-students-logo.jpg=250x250)
