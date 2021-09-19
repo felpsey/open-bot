@@ -6,7 +6,7 @@ module.exports = [
 	{
 		index: 0,
 		name: 'admin',
-	}
+	},
 
 	/**
 	 * @role 		moderator
@@ -15,7 +15,7 @@ module.exports = [
 	{
 		index: 1,
 		name: 'moderator',
-	}
+	},
 
 	/**
 	 * @role 		user
