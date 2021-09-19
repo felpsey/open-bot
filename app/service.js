@@ -15,18 +15,28 @@ module.exports = {
              */
 
             if (interaction.commandName === 'about') {
-                if (interaction.member.roles.cache.some(role => role.name === 'test role')) {
-                let about_embed = embed.general(
-                    '#0099ff',
-                    'https://discord.gg/Kq3ukQJsdc',
-                    'Welcome to the OU Student Space', 
-                    'This is a common area consisting of students of various courses and stages.\nModeration is in accordance with the Universities social media use policy.',
-                    'OU Student Space',
-                );
+                if (interaction.member.roles.cache.some(role => role.name === 'some_other_role')) {
+                    let about_embed = embed.general(
+                        '#0099ff',
+                        'https://discord.gg/Kq3ukQJsdc',
+                        'Welcome to the OU Student Space', 
+                        'This is a common area consisting of students of various courses and stages.\nModeration is in accordance with the Universities social media use policy.',
+                        'OU Student Space',
+                    );
 
-                await interaction.reply({ embeds: [about_embed] });
+                    await interaction.reply({ embeds: [about_embed] });
+                } else {
+                    let error_embed = embed.general(
+                        '#ed4e5c',
+                        'https://discord.gg/Kq3ukQJsdc',
+                        'Access denied', 
+                        'You are unable to execute this command.',
+                        'OU Student Space',
+                    );
+
+                    await interaction.reply({ embeds: [error_embed] });
+                }
             }
-        }
         });
     },
 }
