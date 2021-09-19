@@ -23,8 +23,11 @@ const service = require('./app/service');
 const crawler = require('./app/crawler');
 const embed = require('./app/templates/embed');
 
-const { Commands, Command } = require('./app/CommandBuilder');
+const command_controller = require('./app/controllers/CommandsController');
+
 const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { Command } = require(process.cwd() + '/app/classes/Command');
 
 const token = process.env.DISCORD_TOKEN;
 const client_id = process.env.CLIENT_ID;
@@ -36,57 +39,23 @@ const guild_id = process.env.GUILD_ID;
 */
 
 (async function() {    
+    const rest = new REST({version: '9'}).setToken(token);
 
     let test_connection = await test.connection(client);
+    let command_list = await command_controller.load(Command);
+    let register_commands = await command_controller.register(Routes, rest, client_id, guild_id, command_list);
 
-    // load commands then build the array   
-    if (await Commands.Load() === 1)
-    {
-        let commands = await Commands.Build();
-
-        const rest = new REST({version: '9'}).setToken(token);
-        const { Routes } = require('discord-api-types/v9');
-
-        try 
-        {
-            await rest.put(
-                Routes.applicationGuildCommands(client_id, guild_id),
-                {
-                    body: commands
-                }
-            );
-        } catch (err)
-        {
-            console.error("\x1b[31mERROR:\x1b[0m failure to register commands.\n\x1b[33m%s\x1b[0m", err);
-            return {
-                commands_loaded: false,
-                connection: test_connection
-            }            
-        }
-
-        return {
-            /*
-                @gpc91 changed this to 'commands_loaded' as it is ultimately a success status.
-
-                Commands.Load returns 1 for success, 0 for failure.
-
-                As we can presume that if we have reached this point we have successfully loaded we can return true.
-            */
-            commands_loaded: true,
-            connection: test_connection
-        }
-    }    
-    // if we reach this return statement commands failed to load.
     return {
-        commands_loaded: false,
         connection: test_connection,
+        command_list, command_list,
+        commands_loaded: register_commands,        
     };
 })().then(test => {
     if (test.commands_loaded) { console.log('\x1b[32m%s\x1b[0m', 'Slash Commands registered successfully'); }
     if (test.connection) { console.log('\x1b[32m%s\x1b[0m', 'Connected to Discord Gateway successfully'); }
 
     service.status(client, '/help for command usage');
-    service.start(client, embed);
+    service.start(client, command_list, embed);
 }).catch(error => {
     console.error(error);
 });
