@@ -39,24 +39,28 @@ class Commands
                     // @gpc91 any file beginning with '.' will be ignored.
                     let fname = file.name.split(".")[0];
                     if (file.isFile() && fname != "")
-                    {
+                    {                        
                         let fdata = require(`./commands/${fname}`);
 
-                        /*
-                            @gpc91 avoid adding duplicate commands to the array otherwise registration will fail with DiscordAPIError[50035] APPLICATION_COMMANDS_DUPLICATE_NAME.
-
-                            Currently the first command given a specific name that gets registered is the only command with that name will get registered.
-                        */
-                        if (!Commands[fdata.command.name])
+                        // check to see if the command file is a single command or a multi-command
+                        if (Array.isArray(fdata))
                         {
-                            let command = new Command(fdata.command.name, fdata.command, fdata.func);
-                            Commands[fdata.command.name] = command;
-                            Commands.commands.push(fdata.command.name);
-                        }                        
+                            /* 
+                                if the module contains multiple command definitions, iterate through
+                                them and assign them as normal
+                            */
+                            for (let module of fdata)
+                            {
+                                Commands.NewCommand(module.command.name, module.command, module.func);
+                            }        
+                        } 
                         else
                         {
-                            console.error("\x1b[31mERROR:\x1b[0m%s.", `attempted to add a \x1b[36mduplicate command\x1b[0m named \x1b[33m${fdata.command.name}\x1b[0m`);
-                        }
+                            /*
+                                if it's a single command file, add the command as normal.
+                            */
+                            Commands.NewCommand(fdata.command.name, fdata.command, fdata.func);                                
+                        }                            
                     }
                 }
                 return 1;
@@ -64,8 +68,7 @@ class Commands
             .catch(error => {
                 console.error(error);
                 return 0;
-            });    
-        
+            });            
         // 0 - failure | 1 - success
         return status;
     }
@@ -78,6 +81,24 @@ class Commands
             _c.push(Commands[command].command);
         }
         return _c;
+    }
+
+    static NewCommand = async function(name, data, func)
+    {
+        /*
+            @gpc91 avoid adding duplicate commands to the array otherwise registration will fail with DiscordAPIError[50035] APPLICATION_COMMANDS_DUPLICATE_NAME.
+            Currently the first command given a specific name that gets registered is the only command with that name will get registered.
+        */
+        if (!Commands[name])
+        {
+            let command = new Command(name, data, func);
+            Commands[name] = command;
+            Commands.commands.push(name);
+        }
+        else
+        {
+            console.error("\x1b[31mERROR:\x1b[0m%s.", `attempted to add a \x1b[36mduplicate command\x1b[0m named \x1b[33m${name}\x1b[0m`);
+        }  
     }
 }
 

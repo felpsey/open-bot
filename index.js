@@ -43,7 +43,6 @@ const guild_id = process.env.GUILD_ID;
     if (await Commands.Load() === 1)
     {
         let commands = await Commands.Build();
-        console.log(commands);
 
         const rest = new REST({version: '9'}).setToken(token);
         const { Routes } = require('discord-api-types/v9');
