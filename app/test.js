@@ -5,6 +5,9 @@ const client_id = process.env.CLIENT_ID;
 const guild_id = process.env.GUILD_ID;
 
 module.exports = {
+	/*
+		@gpc91: no longer needed as now have the new "CommandBuilder" module
+	*/ 
     commands: function(rest) {
         return new Promise(function(resolve, reject) {
 			const commands = require('./commands.js'); 
