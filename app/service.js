@@ -11,9 +11,33 @@ module.exports = {
         client.on('interactionCreate', async interaction => {
             if (!interaction.isCommand()) return;
 
-            if (Commands[interaction.commandName]) // @gpc91 check that the command actually exists (though if it doesn't then it shouldn't have been registered)
-            {
-                Commands[interaction.commandName].Execute(interaction);
+            /**
+             * @command     about
+             * @description returns a message in the channel that the command was called in
+             */
+
+            if (interaction.commandName === 'about') {
+                if (interaction.member.roles.cache.some(role => role.name === 'some_other_role')) {
+                    let about_embed = embed.general(
+                        '#0099ff',
+                        'https://discord.gg/Kq3ukQJsdc',
+                        'Welcome to the OU Student Space', 
+                        'This is a common area consisting of students of various courses and stages.\nModeration is in accordance with the Universities social media use policy.',
+                        'OU Student Space',
+                    );
+
+                    await interaction.reply({ embeds: [about_embed] });
+                } else {
+                    let error_embed = embed.general(
+                        '#ed4e5c',
+                        'https://discord.gg/Kq3ukQJsdc',
+                        'Access denied', 
+                        'You are unable to execute this command.',
+                        'OU Student Space',
+                    );
+
+                    await interaction.reply({ embeds: [error_embed] });
+                }
             }
         });
     },
