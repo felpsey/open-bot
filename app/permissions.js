@@ -28,4 +28,5 @@ module.exports = [
 		name: 'admin',
 		role_id: process.env.ADMINISTRATOR_ROLE_ID,
 	},
+	
 ];

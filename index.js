@@ -9,7 +9,7 @@
 * @dependent packages to be included on application boot.
 */
 
-require('dotenv').config({ path: './.env.production' });
+require('dotenv').config({ path: './.env' });
 
 const cron = require('node-cron');
 const axios = require('axios');

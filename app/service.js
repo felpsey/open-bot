@@ -9,12 +9,6 @@ module.exports = {
         client.on('interactionCreate', async interaction => {
             if (!interaction.isCommand()) return;
 
-            /**
-             * @command     about
-             * @description returns a message in the channel that the command was called in
-             */
-
-
             for (var i = 0, len = command_list.length; i < len; i++) {
                 if (interaction.commandName === command_list[i].name) {
                     (async function() {
