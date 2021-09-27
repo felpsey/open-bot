@@ -15,7 +15,8 @@ module.exports = {
                             let command = new Command(
                                 command_schema.snowflake.name,
                                 command_schema.snowflake,
-                                command_schema.logic
+                                command_schema.logic,
+                                command_schema.permissions,
                             );
 
                             this.command_list.push(command);
@@ -34,13 +35,6 @@ module.exports = {
     register: async function(Routes, rest, client_id, guild_id, command_list) {
         return new Promise(function(resolve, reject) {
             try {
-                // command_list.forEach(async function (command) {
-                //     console.log('Registering ' + command.name);
-                //     console.log(command.snowflake);
-
-                //     
-                // })();
-
                 let snowflake_list = [];
 
                 for (var i = 0, len = command_list.length; i < len; i++) {

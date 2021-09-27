@@ -16,6 +16,10 @@ module.exports = {
     snowflake: {
         "name": 'about',
 		"description": 'A brief description of the bot and space',
+    },
+
+    permissions: {
+        "restricted": true,
     }
 
 }
