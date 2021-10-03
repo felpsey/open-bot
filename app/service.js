@@ -12,7 +12,7 @@ module.exports = {
             for (var i = 0, len = command_list.length; i < len; i++) {
                 if (interaction.commandName === command_list[i].name) {
                     (async function() {
-                        await command_list[i].execute(interaction);
+                        await command_list[i].execute(client, interaction);
                     })();
                 }
             }

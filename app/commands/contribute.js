@@ -1,5 +1,5 @@
 module.exports = {
-    logic: async function(interaction) {
+    logic: async function(client, interaction) {
         const embed = require(process.cwd() + '/app/templates/embed');
 
         let contribute_embed = embed.general(

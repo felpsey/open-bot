@@ -1,3 +1,6 @@
+const middleware_permissions_command = require(process.cwd() + '/app/middleware/permissions/command');
+const embed = require(process.cwd() + '/app/templates/embed');
+
 class Command {
     constructor(name, snowflake, logic, permissions, preload = false) {
         this.name = name;
@@ -6,18 +9,36 @@ class Command {
         this.permissions = permissions;
     }
 
-    execute(interaction) {
+    execute(client, interaction) {
+        const check_permissions = async function(interaction, permissions) {
+            let is_authorised = await middleware_permissions_command.check(permissions, interaction.member._roles);
 
-        // Todo: Wrap this in async function
-        if (this.permissions !== undefined) {
-            console.log('This command is restricted');
+            return {
+                authorised: is_authorised,
+            };
+        };
 
-            // Todo: Call middleware whether restriction is user, role or group based, pass interaction.user.roleId for example
-            // Await result from middleware, reject() will log incident and push reject embed to user
-            // 2nd line level middleware check as Discord *should* already restrict commands on registration
-        }
+        check_permissions(interaction, this.permissions).then(result => {
+            if (result.authorised) { 
+                this.logic(client, interaction); 
+            }
+        }).catch(error => {
+            let error_embed = embed.error(
+                'An error has occured', 
+                'Command failed to run, this error has been logged.\nTry again later.',
+            );
 
-        this.logic(interaction);
+            let command_error = embed.command_error(
+                'An interface error has occured', 
+                error.message,
+                '<@' + interaction.user.id + '>',
+                this.name,
+            );
+
+            interaction.reply({ embeds: [error_embed] });
+            client.channels.cache.get(process.env.LOG_CHANNEL_ID).send({ embeds: [command_error] })
+
+        });
     }
 }
 

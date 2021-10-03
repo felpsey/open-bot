@@ -1,5 +1,5 @@
 module.exports = {
-    logic: async function(interaction) {
+    logic: async function(client, interaction) {
         const embed = require(process.cwd() + '/app/templates/embed');
 
         let about_embed = embed.general(
@@ -18,8 +18,17 @@ module.exports = {
 		"description": 'A brief description of the bot and space',
     },
 
-    permissions: {
-        "restricted": true,
-    }
+    permissions: [
+        {
+            id: process.env.ADMINISTRATOR_ROLE_ID,
+            type: 'ROLE',
+            permission: true,
+        },
 
+        {
+            id: process.env.USER_ROLE_ID,
+            type: 'ROLE',
+            permission: true,
+        }
+    ],
 }
