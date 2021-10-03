@@ -6,11 +6,11 @@ module.exports = {
             (async function() {
                 let fs = require('fs').promises;
 
-                await fs.readdir('./app/commands/', { withFileTypes: true})
+                await fs.readdir('./app/components/commands/', { withFileTypes: true})
                 .then(files => {
                     for (let file of files) {
                         if (file.isFile() && file.name != "") {                        
-                            let command_schema = require(process.cwd() + '/app/commands/' + file.name);
+                            let command_schema = require(process.cwd() + '/app/components/commands/' + file.name);
 
                             let command = new Command(
                                 command_schema.snowflake.name,

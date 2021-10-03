@@ -29,7 +29,10 @@ const select_menus_controller = require('./app/controllers/SelectMenusController
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+
 const { Command } = require(process.cwd() + '/app/classes/Command');
+const { Role } = require(process.cwd() + '/app/classes/Role');
+const { SelectMenu } = require(process.cwd() + '/app/classes/SelectMenu');
 
 const token = process.env.DISCORD_TOKEN;
 const client_id = process.env.CLIENT_ID;
