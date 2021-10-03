@@ -15,7 +15,7 @@ const cron = require('node-cron');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageActionRow, MessageEmbed, MessageSelectMenu } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const test = require('./app/test');
@@ -23,7 +23,9 @@ const service = require('./app/service');
 const crawler = require('./app/crawler');
 const embed = require('./app/templates/embed');
 
-const command_controller = require('./app/controllers/CommandsController');
+const commands_controller = require('./app/controllers/CommandsController');
+const roles_controller = require('./app/controllers/RolesController');
+const select_menus_controller = require('./app/controllers/SelectMenusController');
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -42,7 +44,9 @@ const guild_id = process.env.GUILD_ID;
     const rest = new REST({version: '9'}).setToken(token);
 
     let test_connection = await test.connection(client);
-    let command_list = await command_controller.load(Command);
+    let command_list = await commands_controller.list(Command);
+    // let role_list = await roles_controller.list(Role);
+    // let select_menu_list = await select_menus_controller.list(SelectMenu);
     let register_commands = await command_controller.register(Routes, rest, client_id, guild_id, command_list);
 
     return {

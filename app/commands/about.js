@@ -20,12 +20,6 @@ module.exports = {
 
     permissions: [
         {
-            id: process.env.ADMINISTRATOR_ROLE_ID,
-            type: 'ROLE',
-            permission: true,
-        },
-
-        {
             id: process.env.USER_ROLE_ID,
             type: 'ROLE',
             permission: true,

@@ -16,5 +16,13 @@ module.exports = {
     snowflake: {
         "name": 'contribute',
 		"description": 'This bot is open source, find out how to contribute',
-    }
+    },
+
+   permissions: [
+        {
+            id: process.env.USER_ROLE_ID,
+            type: 'ROLE',
+            permission: true,
+        }
+    ],
 }

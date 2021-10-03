@@ -1,5 +1,5 @@
 module.exports = {
-    load: async function(Command) {
+    list: async function(Command) {
         command_list = [];
 
         return new Promise(function(resolve, reject) {

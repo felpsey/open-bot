@@ -17,5 +17,13 @@ module.exports = {
                 }
             }
         });
+
+        client.on('interactionCreate', interaction => {
+            if (!interaction.isSelectMenu()) return;
+            
+            if (interaction.customId === 'add roles') {
+                await interaction.update({ content: 'Something was selected!', components: [] });
+            }
+        });
     },
 }
