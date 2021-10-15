@@ -1,6 +1,6 @@
-# Open Bot Interface
+# Open Bot
 
-A server-side interface for the Open Bot, a OU Student Space Discord bot service.
+An OU Student Space Discord bot service.
 
 ### Installation and setup for contributors
 
