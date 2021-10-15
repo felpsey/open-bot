@@ -1,28 +1,21 @@
+router = require(process.cwd() + '/app/router');
+
 module.exports = {
     status: function(client, message) {
-        client.user.setActivity('commands.mp3', { type: 'LISTENING' })
+        client.user.setActivity('/help in #commands', { type: 'LISTENING' })
     },
 
-    start: function(client, embed_template) {
+    start: function(client, command_list) {
         console.log('\x1b[32m%s\x1b[0m', 'Listening for commands...');
 
         client.on('interactionCreate', async interaction => {
             if (!interaction.isCommand()) return;
+            router.command(client, command_list, interaction)
+        });
 
-            if (interaction.commandName === 'about') {
-                let embed = embed_template.general(
-                    '#0099ff',
-                    'https://open.ac.uk',
-                    'Welcome to the OU Student Space', 
-                    `
-                    This is a common area consisting of students of various courses and stages.\n
-                    Moderation is in accordance with the Universities social media use policy.
-                    `,
-                    'This server is not officially affiliated with the Open University',
-                );
-
-                await interaction.reply({ embeds: [embed] });
-            }
+        client.on('interactionCreate', interaction => {
+            if (!interaction.isSelectMenu()) return;
+            router.select_menu_response(interaction)
         });
     },
 }
