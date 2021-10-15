@@ -20,13 +20,13 @@ module.exports = {
 	    .setTimestamp()
 	},
 
-	command_error: function(title, stacktrace, user, command) {
+	object_error: function(stacktrace, user, object) {
 		return new MessageEmbed()
 		.setColor('#eb4034')
-	    .setTitle(title)
+	    .setTitle('An interface error has occured')
 	    .setDescription(stacktrace)
 		.addFields(
-			{ name: 'Command', value: command, inline: true },
+			{ name: 'Object', value: object, inline: true },
 			{ name: 'User', value: user, inline: true },
 		)
 	    .setFooter('OU Student Space')

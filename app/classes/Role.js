@@ -1,8 +1,8 @@
 class Role {
-    constructor(id, name, permission) {
-        this.id = id;
-        this.name = name;
-        this.permissions = permissions;
+    constructor(label, description, value) {
+        this.label = label;
+        this.description = description;
+        this.value = value;
     }
 }
 

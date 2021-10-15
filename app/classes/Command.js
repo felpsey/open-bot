@@ -1,4 +1,4 @@
-const middleware_permissions_command = require(process.cwd() + '/app/middleware/permissions/command');
+const middleware_user_roles = require(process.cwd() + '/app/middleware/user_roles');
 const embed = require(process.cwd() + '/app/templates/embed');
 
 class Command {
@@ -11,7 +11,7 @@ class Command {
 
     execute(client, interaction) {
         const check_permissions = async function(interaction, permissions) {
-            let is_authorised = await middleware_permissions_command.check(permissions, interaction.member._roles);
+            let is_authorised = await middleware_user_roles.check(permissions, interaction.member._roles);
 
             return {
                 authorised: is_authorised,
@@ -25,19 +25,17 @@ class Command {
         }).catch(error => {
             let error_embed = embed.error(
                 'An error has occured', 
-                'Command failed to run, this error has been logged.\nTry again later.',
+                error.message,
             );
 
-            let command_error = embed.command_error(
-                'An interface error has occured', 
+            let command_error = embed.object_error(
                 error.message,
                 '<@' + interaction.user.id + '>',
-                this.name,
+                'Command' + this.name,
             );
 
             interaction.reply({ embeds: [error_embed] });
             client.channels.cache.get(process.env.LOG_CHANNEL_ID).send({ embeds: [command_error] })
-
         });
     }
 }

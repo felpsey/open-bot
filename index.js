@@ -24,14 +24,12 @@ const crawler = require('./app/crawler');
 const embed = require('./app/templates/embed');
 
 const commands_controller = require('./app/controllers/CommandsController');
-const roles_controller = require('./app/controllers/RolesController');
 const select_menus_controller = require('./app/controllers/SelectMenusController');
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
 const { Command } = require(process.cwd() + '/app/classes/Command');
-const { Role } = require(process.cwd() + '/app/classes/Role');
 const { SelectMenu } = require(process.cwd() + '/app/classes/SelectMenu');
 
 const token = process.env.DISCORD_TOKEN;
@@ -47,10 +45,10 @@ const guild_id = process.env.GUILD_ID;
     const rest = new REST({version: '9'}).setToken(token);
 
     let test_connection = await test.connection(client);
-    let command_list = await commands_controller.list(Command);
+    let command_list = await commands_controller.index(Command);
     // let role_list = await roles_controller.list(Role);
     // let select_menu_list = await select_menus_controller.list(SelectMenu);
-    let register_commands = await command_controller.register(Routes, rest, client_id, guild_id, command_list);
+    let register_commands = await commands_controller.register(Routes, rest, client_id, guild_id, command_list);
 
     return {
         connection: test_connection,

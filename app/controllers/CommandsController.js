@@ -1,8 +1,8 @@
 module.exports = {
-    list: async function(Command) {
-        command_list = [];
-
+    index: async function(Command) {
         return new Promise(function(resolve, reject) {
+            command_list = [];
+            
             (async function() {
                 let fs = require('fs').promises;
 

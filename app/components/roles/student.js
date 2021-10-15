@@ -1,12 +1,5 @@
 module.exports = {
-    id: 'ID',
-    name: 'NAME',
-
-    permissions: [
-        {
-            id: process.env.USER_ROLE_ID,
-            type: 'ROLE',
-            permission: true,
-        }
-    ],
+    value: '894200821875609660',
+    label: 'student',
+    description: 'A student of the Open University',
 }

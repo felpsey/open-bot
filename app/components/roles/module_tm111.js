@@ -1,12 +1,5 @@
 module.exports = {
-    id: 'ID',
-    name: 'NAME',
-
-    permissions: [
-        {
-            id: process.env.USER_ROLE_ID,
-            type: 'ROLE',
-            permission: true,
-        }
-    ],
+    value: '886620239914237993',
+    label: 'module tm111',
+    description: 'For students studying the TM111 module',
 }
